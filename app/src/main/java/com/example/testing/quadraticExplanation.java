@@ -172,9 +172,9 @@ public class quadraticExplanation extends Fragment {
         explanationX2CalculationDenominator.setText("");
     }
 
-    public double rnd8(double number) // round double to 8
+    private double rnd8(double number) // round double to 5 yes i know its not 8 shut it
     {
-        double roundedNumber = BigDecimal.valueOf(number).setScale(8, RoundingMode.HALF_UP).doubleValue();
+        double roundedNumber = BigDecimal.valueOf(number).setScale(5, RoundingMode.HALF_UP).doubleValue();
         return roundedNumber;
     }
 

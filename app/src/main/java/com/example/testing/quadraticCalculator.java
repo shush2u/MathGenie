@@ -163,22 +163,16 @@ public class quadraticCalculator extends Fragment {
         alertCard.setVisibility(View.GONE);
         alertText.setVisibility(View.GONE);
 
-        discriminatorText = (TextView) getView().findViewById(R.id.discriminatorText);
         discriminatorValue = (TextView) getView().findViewById(R.id.discriminatorValue);
-        x1Text = (TextView) getView().findViewById(R.id.x1Text);
         x1Value = (TextView) getView().findViewById(R.id.x1Value);
-        x2Text = (TextView) getView().findViewById(R.id.x2Text);
         x2Value = (TextView) getView().findViewById(R.id.x2Value);
         resultLayout = (LinearLayout) getView().findViewById(R.id.result);
         resultLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
         resultCard = (CardView) getView().findViewById(R.id.resultCard);
 
         resultCard.setVisibility(View.INVISIBLE);
-        discriminatorText.setVisibility(View.GONE);
         discriminatorValue.setVisibility(View.GONE);
-        x1Text.setVisibility(View.GONE);
         x1Value.setVisibility(View.GONE);
-        x2Text.setVisibility(View.GONE);
         x2Value.setVisibility(View.GONE);
 
         /*
@@ -210,9 +204,9 @@ public class quadraticCalculator extends Fragment {
         credits.create().show();
     }*/
 
-    public double rnd8(double number) // round double to 8
+    private double rnd8(double number) // round double to 5
     {
-        double roundedNumber = BigDecimal.valueOf(number).setScale(8, RoundingMode.HALF_UP).doubleValue();
+        double roundedNumber = BigDecimal.valueOf(number).setScale(5, RoundingMode.HALF_UP).doubleValue();
         return roundedNumber;
     }
 
@@ -261,11 +255,9 @@ public class quadraticCalculator extends Fragment {
 
     public void resetAnswerText()
     {
-        discriminatorText.setText("D =");
-        x1Text.setText("x₁ =");
-        x2Text.setText("x₂ =");
-        x1Value.setText("");
-        x2Value.setText("");
+        discriminatorValue.setText("√D =");
+        x1Value.setText("x₁ =");
+        x2Value.setText("x₂ =");
     }
 
     public void hideKeyboard() {
@@ -278,13 +270,12 @@ public class quadraticCalculator extends Fragment {
             resultCard.setVisibility(View.INVISIBLE);
         else
             resultCard.setVisibility(View.VISIBLE);
+
         TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
+
         // result card
-        discriminatorText.setVisibility(visibility);
         discriminatorValue.setVisibility(visibility);
-        x1Text.setVisibility(visibility);
         x1Value.setVisibility(visibility);
-        x2Text.setVisibility(visibility);
         x2Value.setVisibility(visibility);
         /*
         if (visibility == View.VISIBLE && scrollForMoreExpanded == false) // fades in scrollForMoreCard, since its supposed to appear a little after the resultCard
@@ -381,19 +372,17 @@ public class quadraticCalculator extends Fragment {
             double x1 = (-inputB - discriminatorRoot) / (2 * inputA);
             double x2 = (-inputB + discriminatorRoot) / (2 * inputA);
 
-            discriminatorText.setText("√D =");
-            discriminatorValue.setText("√" + fmt(rnd8(discriminator)) + " = " + fmt(rnd8(sqrt(discriminator))) + "");
-            x1Value.setText("" + fmt(rnd8(x1)));
-            x2Value.setText("" + fmt(rnd8(x2)));
+            discriminatorValue.setText("√D = " + "√" + fmt(rnd8(discriminator)) + " = " + fmt(rnd8(sqrt(discriminator))) + "");
+            x1Value.setText("x₁ = " + fmt(rnd8(x1)));
+            x2Value.setText("x₂ = " + fmt(rnd8(x2)));
         }
         else if ((inputB * inputB) - (4 * inputA * inputC) < -1)
         {
             resultAndScrollCardVisibility(View.VISIBLE);
             double discriminator = inputB * inputB - 4 * inputA * inputC;
-            discriminatorText.setText("√D = " + fmt(rnd8(discriminator)));
-            discriminatorValue.setText("");
-            x1Text.setText("D < 0");
-            x2Text.setText("No answers");
+            discriminatorValue.setText("√D = " + fmt(rnd8(discriminator)));
+            x1Value.setText("D < 0");
+            x2Value.setText("No answers");
         }
         else
         {
