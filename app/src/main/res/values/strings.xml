@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">MathGenie</string>
+    // Bendra
+    <string name="aboutButtonText">Apie</string>
+    <string name="exitButtonText">Atgal</string>
+    <string name="continueButtonText">Toliau</string>
+    <string name="helpButtonText">Pagalba</string>
+    <string name="confButtonTextSingle">Rasti atsakymą</string>
+    <string name="confButtonTextMultiple">Rasti atsakymus</string>
+    <string name="clearButtonText">Ištrinti</string>
+    <string name="explanationButton">Kaip spręsti?</string>
+
+    <string name="selectMode1">Kvadratinių Lygčių Skaičiuoklė</string>
+    // Kvadratinių Lygčių Skaičiuoklė
+    <string name="textViewDescriminatorOutputTitle">√D = </string>
+    <string name="textViewX1OutputTitle">x₁ = </string>
+    <string name="textViewX2OutputTitle">x₂ = </string>
+    <string name="editAInput">Įveskite a</string>
+    <string name="editBInput">Įveskite b</string>
+    <string name="editCInput">Įveskite c</string>
+
+    <string name="quadraticExplanationText1">Kvadratinė lygtis sprendžiama pagal formulę:</string>
+    // Kvadratinių Lygčių Skaičiuoklės paaiškinimas
+    <string name="quadraticExplanationText2">Kadangi:</string>
+    <string name="quadraticExplanationText3">Įstatome kintamuosius ir gauname:</string>
+    <string name="quadraticExplanationText4">Ištraukę diskriminanto šaknį galime rasti sprendinius:</string>
+    <string name="quadraticExplanationText5">Pagal formulę:</string>
+
+    <string name="selectMode2">Koordinačių Plokštumos Skaičiuoklė</string>
+    // Koordinačių Plokštumos Skaičiuoklė
+    <string name="editX1InputCoord">Įveskite x₁</string>
+    <string name="editY1InputCoord">Įveskite y₁</string>
+    <string name="editX2InputCoord">Įveskite x₂</string>
+    <string name="editY2InputCoord">Įveskite y₂</string>
+    <string name="textViewDistanceCoord">Atstumas = </string>
+    <string name="textViewMiddleXTitleCoord">x = </string>
+    <string name="textViewMiddleYTitleCoord">y = </string>
+    <string name="confButtonTextPythagoras1">Rasti įžambinę </string>
+    <string name="confButtonTextPythagoras2">Rasti statinę </string>
+
+    <string name="selectMode3">Pitagoro Teoremos Skaičiuoklė </string>
+    // Pitagoro Teoremos Skaičiuoklė
+    <string name="editAInputPyt">Įveskite pirmąją kraštinę</string>
+    <string name="editBInputPyt">Įveskite antrąją kraštinę</string>
+    <string name="txtOutputUnknownSideTitle">Likusi kraštinė = </string>
+
+
+    <string name="selectMode4">Trikampio Kraštinių Skaičiuoklė </string>
+    // Trikampio Kraštinių Skaičiuoklė (unfinished)
+    <string name="editAInputTri">Įveskite a</string>
+    <string name="editAAngleInputTri">Įveskite ∠a</string>
+    <string name="editBInputTri">Įveskite b</string>
+    <string name="editBAngleInputTri">Įveskite ∠b</string>
+    <string name="editCInputTri">Įveskite c</string>
+    <string name="editCAngleInputTri">Įveskite ∠c</string>
+    <string name="txtOutputATitle">a = </string>
+    <string name="txtOutputAAngleTitle">∠a = </string>
+    <string name="txtOutputBTitle">b = </string>
+    <string name="txtOutputBAngleTitle">∠b = </string>
+    <string name="txtOutputCTitle">c = </string>
+    <string name="txtOutputCAngleTitle">∠c = </string>
+
+
+    <string name="menu_drawer_open">Drawer Open</string>
+    <string name="menu_drawer_close">Drawer Closed</string>
+
+    <string-array name="signs">
+        <item>+</item>
+        <item>-</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

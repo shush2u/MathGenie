@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/nav_quadratic"
+            android:icon="@drawable/ic_quadratic"
+            android:title="Quadratic"  />
+
+        <item android:id="@+id/nav_coordinates"
+            android:icon="@drawable/ic_coordinates"
+            android:title="Coordinates"  />
+
+        <item android:id="@+id/nav_pythagoras"
+            android:icon="@drawable/ic_pythagoras"
+            android:title="Pythagoras"  />
+
+        <item android:id="@+id/nav_about"
+            android:icon="@drawable/ic_about"
+            android:title="About"  />
+
+    </group>
+
+</menu>
