@@ -20,14 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".coordinate_tieses"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".coordinate_tieses_explanation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".pythagoras"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".pythagoras_explanation"
+        <activity android:name=".aboutPage"
             android:screenOrientation="portrait"/>
     </application>
 

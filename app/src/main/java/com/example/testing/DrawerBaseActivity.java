@@ -51,6 +51,10 @@ public class DrawerBaseActivity extends AppCompatActivity {
                 startActivity(new Intent(this, pythagoras.class));
                 overridePendingTransition(0, 0);
                 break;
+            case R.id.nav_about:
+                startActivity(new Intent(this, aboutPage.class));
+                overridePendingTransition(0, 0);
+                break;
         }
         return false;
     }
