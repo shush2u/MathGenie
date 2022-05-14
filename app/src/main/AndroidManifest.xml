@@ -10,22 +10,25 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.MathGenie">
-        <activity android:name=".quadraticActivity"></activity>
-        <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".splash">
+        <activity android:name=".quadraticMain"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".splash"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".landing_page" />
-        <activity android:name=".quadratic"/>
-        <activity android:name=".coordinate_tieses" />
-        <activity android:name=".coordinate_tieses_explanation" />
-        <activity android:name=".pythagoras" />
-        <activity android:name=".pythagoras_explanation" />
+
+        <activity android:name=".coordinate_tieses"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".coordinate_tieses_explanation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".pythagoras"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".pythagoras_explanation"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

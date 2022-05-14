@@ -1,9 +1,7 @@
 package com.example.testing;
 
 import android.animation.LayoutTransition;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,18 +13,14 @@ import android.text.TextUtils;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.example.testing.databinding.QuadraticBinding;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -41,32 +35,20 @@ import static java.lang.Math.sqrt;
  */
 public class quadraticCalculator extends Fragment {
 
-    QuadraticBinding quadraticBinding;
-
-    CardView resultCard, scrollForMoreCard, explanationCard1, explanationCard2, explanationCard3, explanationCard4;
-    TextView x1Text, x1Value, x2Text, x2Value, discriminatorText, discriminatorValue;
+    CardView resultCard;
+    TextView x1Value, x2Value, discriminatorValue;
 
     LinearLayout alertLayout;
     CardView alertCard;
     TextView alertText;
 
-    TextView scrollForMoreText;
-    ImageView scrollForMoreArrow;
-    TextView explanationDiscriminatorCalculationTxt;
-    TextView explanationX1Text, explanationX1CalculationNumerator, explanationX1CalculationDenominator, explanationX1CalculationAnswer, explanationX1EqualSign;
-    TextView explanationX2Text, explanationX2CalculationNumerator, explanationX2CalculationDenominator, explanationX2CalculationAnswer, explanationX2EqualSign;
-    LinearLayout resultLayout, scrollForMoreLayout;
+    LinearLayout resultLayout;
     Button submitButton;
 
-    ScrollView quadraticScrollView;
-
-    boolean alertCardBusy = false, scrollForMoreExpanded = false;
-    boolean enableScrolling = false;
+    boolean alertCardBusy = false;
 
     double inputA, inputB, inputC;
     EditText inputAText, inputBText, inputCText;
-
-    TextView calculatorReceiveTest;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -107,12 +89,6 @@ public class quadraticCalculator extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            //testTextString = bundle.getString("test");
-        }
-
     }
 
     @Override
@@ -121,8 +97,6 @@ public class quadraticCalculator extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_quadratic_calculator, container, false);
     }
-
-    MainActivity mainActivity;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -141,12 +115,12 @@ public class quadraticCalculator extends Fragment {
     private void sendData(double sendInputA, double sendInputB, double sendInputC)
     {
         double discriminator = sendInputB * sendInputB - 4 * sendInputA * sendInputC;
-        ((MainActivity)getActivity()).receiveData(sendInputA, sendInputB, sendInputC, discriminator);
+        ((quadraticMain)getActivity()).receiveData(sendInputA, sendInputB, sendInputC, discriminator);
     }
 
     private void invalidSubmission()
     {
-        ((MainActivity)getActivity()).validateSubmission(false);
+        ((quadraticMain)getActivity()).validateSubmission(false);
     }
 
     private void assignIDs()
@@ -175,34 +149,8 @@ public class quadraticCalculator extends Fragment {
         x1Value.setVisibility(View.GONE);
         x2Value.setVisibility(View.GONE);
 
-        /*
-        scrollForMoreLayout = (LinearLayout) getView().findViewById(R.id.scrollForMoreLayout);
-        scrollForMoreLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
-        scrollForMoreCard = (CardView) getView().findViewById(R.id.scrollForMoreCard);
-        scrollForMoreText = (TextView) getView().findViewById(R.id.scrollForMoreText);
-        scrollForMoreArrow = (ImageView) getView().findViewById(R.id.scrollForMoreArrow);
-
-
-        scrollForMoreCard.setVisibility(View.INVISIBLE);
-        scrollForMoreText.setVisibility(View.GONE);
-        scrollForMoreArrow.setVisibility(View.GONE);*/
-
         submitButton = (Button) getView().findViewById(R.id.submitButton);
     }
-
-    /*public void giveInfo(View view) {
-        AlertDialog.Builder credits =  new AlertDialog.Builder(this);
-        credits.setTitle("Quadratic Calculator Guide:");
-        credits.setMessage("Enter the required information below.");
-        credits.setNeutralButton("ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-
-            }
-        });
-        credits.create().show();
-    }*/
 
     private double rnd8(double number) // round double to 5
     {
@@ -210,7 +158,7 @@ public class quadraticCalculator extends Fragment {
         return roundedNumber;
     }
 
-    public static String fmt(double number) // formats a double into a string to remove unnecessary fraction (.0, if applicable)
+    private static String fmt(double number) // formats a double into a string to remove unnecessary fraction (.0, if applicable)
     {
         if (number == (int) number)
             return String.format("%d", (int) number);
@@ -218,13 +166,13 @@ public class quadraticCalculator extends Fragment {
             return String.format("%s", number);
     }
 
-    public void fireAlert(String textToDisplay)
+    private void fireAlert(String textToDisplay)
     {
         if (alertCardBusy == false)
         {
             if(resultCard.getVisibility() == View.VISIBLE)
             {
-                resultAndScrollCardVisibility(View.GONE);
+                resultCardVisibility(View.GONE);
             }
             alertText.setText(textToDisplay);
             alertCardBusy = true;
@@ -236,36 +184,25 @@ public class quadraticCalculator extends Fragment {
                     int v = (alertText.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
                     TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
                     alertText.setVisibility(v);
-                    int DELAY = 3500; // Delay time in milliseconds
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run()
-                        {
-                            int y = (alertText.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
-                            TransitionManager.beginDelayedTransition(scrollForMoreLayout, new AutoTransition());
-                            alertText.setVisibility(y);
-                            alertCard.setVisibility(View.GONE);
-                            alertCardBusy = false;
-                        }
-                    }, DELAY);
+                    alertCardBusy = false;
                 }
             }, DELAY);
         }
     }
 
-    public void resetAnswerText()
+    private void resetAnswerText()
     {
         discriminatorValue.setText("√D =");
         x1Value.setText("x₁ =");
         x2Value.setText("x₂ =");
     }
 
-    public void hideKeyboard() {
+    private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(submitButton.getWindowToken(), 0);
     }
 
-    public void resultAndScrollCardVisibility(int visibility) {
+    private void resultCardVisibility(int visibility) {
         if (visibility == View.GONE)
             resultCard.setVisibility(View.INVISIBLE);
         else
@@ -273,40 +210,9 @@ public class quadraticCalculator extends Fragment {
 
         TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
 
-        // result card
         discriminatorValue.setVisibility(visibility);
         x1Value.setVisibility(visibility);
         x2Value.setVisibility(visibility);
-        /*
-        if (visibility == View.VISIBLE && scrollForMoreExpanded == false) // fades in scrollForMoreCard, since its supposed to appear a little after the resultCard
-        {
-            int DELAY = 1500; // Delay time in milliseconds
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(scrollForMoreCard.getVisibility() != View.VISIBLE)
-                    {
-                        enableScrolling = true;
-                        int y = View.VISIBLE;
-                        TransitionManager.beginDelayedTransition(scrollForMoreLayout, new AutoTransition());
-                        scrollForMoreExpanded = true;
-                        scrollForMoreCard.setVisibility(View.VISIBLE);
-                        scrollForMoreText.setVisibility(y);
-                        scrollForMoreArrow.setVisibility(y);
-                    }
-                }
-            }, DELAY);
-        }
-        if (visibility == View.GONE && scrollForMoreExpanded == true) // fades out scrollForMoreCard
-        {
-            enableScrolling = false;
-            TransitionManager.beginDelayedTransition(scrollForMoreLayout, new AutoTransition());
-            scrollForMoreExpanded = false;
-            scrollForMoreCard.setVisibility(View.INVISIBLE);
-            scrollForMoreText.setVisibility(visibility);
-            scrollForMoreArrow.setVisibility(visibility);
-        }*/
     }
 
     private void showResult()
@@ -327,7 +233,6 @@ public class quadraticCalculator extends Fragment {
         }
         if (anyValidInputReceived == false)
         {
-
             String text = "Enter a, b and c!";
             if (TextUtils.isEmpty(inputAText.getText().toString()) && TextUtils.isEmpty(inputBText.getText().toString()) && TextUtils.isEmpty(inputCText.getText().toString()))
                 text = "Enter a, b and c!";
@@ -366,7 +271,7 @@ public class quadraticCalculator extends Fragment {
         }
         else if ((inputB * inputB) - (4 * inputA * inputC) > -1 && anyValidInputReceived == true)
         {
-            resultAndScrollCardVisibility(View.VISIBLE);
+            resultCardVisibility(View.VISIBLE);
             double discriminator = inputB * inputB - 4 * inputA * inputC;
             double discriminatorRoot = sqrt(discriminator);
             double x1 = (-inputB - discriminatorRoot) / (2 * inputA);
@@ -378,7 +283,7 @@ public class quadraticCalculator extends Fragment {
         }
         else if ((inputB * inputB) - (4 * inputA * inputC) < -1)
         {
-            resultAndScrollCardVisibility(View.VISIBLE);
+            resultCardVisibility(View.VISIBLE);
             double discriminator = inputB * inputB - 4 * inputA * inputC;
             discriminatorValue.setText("√D = " + fmt(rnd8(discriminator)));
             x1Value.setText("D < 0");
@@ -386,7 +291,7 @@ public class quadraticCalculator extends Fragment {
         }
         else
         {
-            resultAndScrollCardVisibility(View.VISIBLE);
+            resultCardVisibility(View.VISIBLE);
             anyValidInputReceived = false;
             discriminatorValue.setText("Shouldnt be here");
         }

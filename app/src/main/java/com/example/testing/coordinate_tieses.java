@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.testing.databinding.ActivityCoordinatesBinding;
-import com.example.testing.databinding.ActivityMainBinding;
 
 import static java.lang.Math.sqrt;
 
@@ -50,8 +49,8 @@ public class coordinate_tieses extends coordinate_tieses_explanation {
             @Override
             public void onClick(View view) {
                 String inputData = editX1InputCoord.getText().toString();
-                Intent intent = new Intent(coordinate_tieses.this, activity_intro.class);
-                startActivity(intent);
+                //Intent intent = new Intent(coordinate_tieses.this, activity_intro.class);
+                //startActivity(intent);
             }
         });
         explanationButton = (Button)findViewById(R.id.explanationButton);

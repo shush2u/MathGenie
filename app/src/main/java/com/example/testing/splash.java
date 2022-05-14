@@ -9,13 +9,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 public class splash extends Activity {
 
-    private static int SPLASH_SCREEN = 5000;
+    private static int SPLASH_SCREEN = 4000;
 
-    Animation topAnimation, bottomAnimation;
+    Animation topAnimation;
     ImageView image;
 
     @Override
@@ -25,7 +23,6 @@ public class splash extends Activity {
         setContentView(R.layout.splash);
 
         topAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
-        //bottomAnimation = AnimationUtils.loadAnimation(this, R.anim.fadeout);
 
         image = findViewById(R.id.splashLogo);
         image.setAnimation(topAnimation);
@@ -33,7 +30,7 @@ public class splash extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(splash.this, MainActivity.class);
+                Intent intent = new Intent(splash.this, quadraticMain.class);
                 startActivity(intent);
                 finish();
             }

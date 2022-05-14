@@ -8,7 +8,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -41,7 +40,7 @@ public class DrawerBaseActivity extends AppCompatActivity {
         drawerLayout.closeDrawer(GravityCompat.START);
         switch (item.getItemId()) {
             case R.id.nav_quadratic:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, quadraticMain.class));
                 overridePendingTransition(0, 0);
                 break;
             case R.id.nav_coordinates:

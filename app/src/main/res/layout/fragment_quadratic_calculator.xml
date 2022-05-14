@@ -191,9 +191,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/getAnswerButton"
+                android:id="@+id/submitButtonLayout"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="10dp"
                 android:padding="6dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -223,7 +223,7 @@
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="0dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/getAnswerButton">
+                app:layout_constraintTop_toBottomOf="@+id/submitButtonLayout">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/alertCard"

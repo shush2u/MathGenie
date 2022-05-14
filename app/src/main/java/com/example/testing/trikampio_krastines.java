@@ -55,8 +55,8 @@ public class trikampio_krastines extends Activity {
             @Override
             public void onClick(View view) {
                 String inputData = editAInput.getText().toString();
-                Intent intent = new Intent(trikampio_krastines.this, activity_intro.class);
-                startActivity(intent);
+                //Intent intent = new Intent(trikampio_krastines.this, activity_intro.class);
+                //startActivity(intent);
             }
         });
     }
