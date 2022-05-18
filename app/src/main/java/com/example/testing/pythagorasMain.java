@@ -1,18 +1,19 @@
 package com.example.testing;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.testing.databinding.QuadraticMainBinding;
+import com.example.testing.databinding.PythagorasMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class quadraticMain extends drawerBaseActivity {
+public class pythagorasMain extends drawerBaseActivity {
 
-    QuadraticMainBinding binding;
+    PythagorasMainBinding binding;
 
     boolean validSubmission = false;
     int currentFragment; // 1 calc, 2 expl.
@@ -21,11 +22,11 @@ public class quadraticMain extends drawerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        binding = QuadraticMainBinding.inflate(getLayoutInflater());
+        binding = PythagorasMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        allocateActivityTitle("Quadratic Calculator");
+        allocateActivityTitle("Pythagoras Calculator");
 
-        replaceFragment(new quadraticCalculator(), false);
+        replaceFragment(new pythagorasCalculator(), false);
         currentFragment = 1;
 
         navView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
@@ -38,14 +39,14 @@ public class quadraticMain extends drawerBaseActivity {
                 case R.id.bottom_nav_calculator:
                     if(currentFragment != 1)
                     {
-                        replaceFragment(new quadraticCalculator(), true);
+                        replaceFragment(new pythagorasCalculator(), true);
                         currentFragment = 1;
                     }
                     break;
                 case R.id.bottom_nav_explanation:
                     if(validSubmission == true && currentFragment != 2)
                     {
-                        replaceFragment(new quadraticExplanation(), true);
+                        replaceFragment(new pythagorasExplanation(), true);
                         currentFragment = 2;
                     }
                     break;
@@ -86,22 +87,24 @@ public class quadraticMain extends drawerBaseActivity {
         fragmentTransaction.commit();
     }
 
-    double inputA, inputB, inputC, discriminator;
+    double input1, input2, answerSquare;
+    boolean hypotenuse;
 
     private void setBundleData()
     {
-        bundle.putDouble("inputA", inputA);
-        bundle.putDouble("inputB", inputB);
-        bundle.putDouble("inputC", inputC);
-        bundle.putDouble("discriminator", discriminator);
+        bundle.putDouble("input1", input1);
+        bundle.putDouble("input2", input2);
+        bundle.putDouble("answerSquare", answerSquare);
+        bundle.putBoolean("hypotenuse", hypotenuse);
+        Log.i("Debug:", "MainSet: " + hypotenuse);
     }
 
-    public void receiveData(double receivedInputA, double receivedInputB, double receivedInputC, double receivedDiscriminator)
+    public void receiveData(double receivedInput1, double receivedInput2, boolean receivedHypotenuse, double receivedAnswerSquare)
     {
-        inputA = receivedInputA;
-        inputB = receivedInputB;
-        inputC = receivedInputC;
-        discriminator = receivedDiscriminator;
+        input1 = receivedInput1;
+        input2 = receivedInput2;
+        hypotenuse = receivedHypotenuse;
+        answerSquare = receivedAnswerSquare;
         validateSubmission(true);
     }
 

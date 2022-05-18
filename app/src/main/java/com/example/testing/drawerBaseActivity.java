@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class DrawerBaseActivity extends AppCompatActivity {
+public class drawerBaseActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
 
@@ -41,18 +41,22 @@ public class DrawerBaseActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.nav_quadratic:
                 startActivity(new Intent(this, quadraticMain.class));
+                finish();
                 overridePendingTransition(0, 0);
                 break;
             case R.id.nav_coordinates:
                 startActivity(new Intent(this, coordinate_tieses.class));
+                finish();
                 overridePendingTransition(0, 0);
                 break;
             case R.id.nav_pythagoras:
-                startActivity(new Intent(this, pythagoras.class));
+                startActivity(new Intent(this, pythagorasMain.class));
+                finish();
                 overridePendingTransition(0, 0);
                 break;
             case R.id.nav_about:
                 startActivity(new Intent(this, aboutPage.class));
+                finish();
                 overridePendingTransition(0, 0);
                 break;
         }

@@ -142,17 +142,19 @@ public class quadraticExplanation extends Fragment {
             double discriminatorRoot = sqrt(discriminator);
             double x1 = (-inputB - discriminatorRoot) / (2 * inputA);
             double x2 = (-inputB + discriminatorRoot) / (2 * inputA);
-            explanationDiscriminatorCalculation.setText("D = " + fmt(rnd8(inputB)) + "²" + " - 4 * " + fmt(rnd8(inputA)) + " * " + fmt(rnd8(inputC)) +" = " + fmt(rnd8((inputB*inputB))) + " - " + fmt(rnd8((4*inputA*inputC))) + " = " + fmt(rnd8(discriminator)));
-            explanationX1CalculationNumerator.setText("-" + fmt(rnd8(inputB)) + " + " + "√" + fmt(rnd8(discriminator)));
-            explanationX1CalculationDenominator.setText("2 * " + fmt(rnd8(inputA)));
+
+
+            explanationDiscriminatorCalculation.setText("D = " + clnFmt(rnd8(inputB)) + "²" + " - 4 * " + clnFmt(rnd8(inputA)) + " * " + clnFmt(rnd8(inputC)) +" = " + clnFmt(rnd8((inputB*inputB))) + " - " + clnFmt(rnd8((4*inputA*inputC))) + " = " + fmt(rnd8(discriminator)));
+            explanationX1CalculationNumerator.setText("-" + clnFmt(rnd8(inputB)) + " + " + "√" + fmt(rnd8(discriminator)));
+            explanationX1CalculationDenominator.setText("2 * " + clnFmt(rnd8(inputA)));
             explanationX1CalculationAnswer.setText("" + fmt(rnd8(x1)));
-            explanationX2CalculationNumerator.setText("-" + fmt(rnd8(inputB)) + " - " + "√" + fmt(rnd8(discriminator)));
-            explanationX2CalculationDenominator.setText("2 * " + fmt(rnd8(inputA)));
+            explanationX2CalculationNumerator.setText("-" + clnFmt(rnd8(inputB)) + " - " + "√" + fmt(rnd8(discriminator)));
+            explanationX2CalculationDenominator.setText("2 * " + clnFmt(rnd8(inputA)));
             explanationX2CalculationAnswer.setText(""+ fmt(rnd8(x2)));
         }
         else if ((inputB * inputB) - (4 * inputA * inputC) < -1)
         {
-            explanationDiscriminatorCalculation.setText("D = " + fmt(rnd8(inputB)) + "²" + " - 4 * " + fmt(rnd8(inputA)) + " * " + fmt(rnd8(inputC)) +" = " + fmt(rnd8((inputB*inputB))) + " - " + fmt(rnd8((4*inputA*inputC))) + " = " + fmt(rnd8(discriminator)));
+            explanationDiscriminatorCalculation.setText("D = " + clnFmt(rnd8(inputB)) + "²" + " - 4 * " + clnFmt(rnd8(inputA)) + " * " + clnFmt(rnd8(inputC)) +" = " + clnFmt(rnd8((inputB*inputB))) + " - " + clnFmt(rnd8((4*inputA*inputC))) + " = " + fmt(rnd8(discriminator)));
             hideFullAnswer();
         }
     }
@@ -180,7 +182,7 @@ public class quadraticExplanation extends Fragment {
 
 
 
-    public static String fmt(double number) // formats a double into a string to remove unnecessary fraction (.0, if applicable)
+    private static String fmt(double number) // formats a double into a string to remove unnecessary fraction (.0, if applicable)
     {
         String numberToReturn;
         if (number == (int) number) // 6, 5, 48, etc
@@ -192,5 +194,21 @@ public class quadraticExplanation extends Fragment {
             numberToReturn = String.format("%s", number);
         }
         return numberToReturn;
+    }
+
+    private static String clnFmt(double number) // fmt that also adds parentheses around number if negative
+    {
+        String numberStr;
+        if(number < 0)
+        {
+            numberStr = "(";
+            numberStr += fmt(number);
+            numberStr += ")";
+        }
+        else
+        {
+            numberStr = fmt(number);
+        }
+        return numberStr;
     }
 }
