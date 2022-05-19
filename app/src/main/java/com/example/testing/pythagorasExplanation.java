@@ -133,7 +133,20 @@ public class pythagorasExplanation extends Fragment {
         }
         else
         {
-            pythagorasExplanationSideOrHypotenuseText.setText("We can find fasdfasf hypotenuse of a right triangle with this formula:");
+            pythagorasExplanationSideOrHypotenuseText.setText("We can find the side of a right triangle with this formula:");
+            pythagorasExplanationSideOrHypotenuseFormula.setText("c² - a² = b²");
+            pythagorasExplanationSideOrHypotenuseImage.setImageResource(R.drawable.pythagoras_triangle_side);
+
+            if(input1 > input2)
+            {
+                pythagorasExplanationCalculation.setText("b² = "+ clnFmt(rnd(input1)) + "² - " + clnFmt(rnd(input2)) + "² = " + fmt(rnd(input1*input1)) + " - " + clnFmt(rnd(input2*input2)) + " = " + fmt(rnd(answerSquare)));
+            }
+            else
+            {
+                pythagorasExplanationCalculation.setText("b² = "+ clnFmt(rnd(input2)) + "² - " + clnFmt(rnd(input1)) + "² = " + fmt(rnd(input2*input2)) + " - " + clnFmt(rnd(input1*input1)) + " = " + fmt(rnd(answerSquare)));
+            }
+            pythagorasExplanationCalculationRoot.setText("b = √" + fmt(rnd(answerSquare)) + " = " + fmt(rnd(sqrt(answerSquare))));
+            pythagorasExplanationCalculationFinal.setText("b = " + fmt(rnd(sqrt(answerSquare))));
         }
     }
 

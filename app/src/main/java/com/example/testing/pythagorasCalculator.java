@@ -204,13 +204,13 @@ public class pythagorasCalculator extends Fragment {
 
     private void fireAlert(String textToDisplay)
     {
+        alertText.setText(textToDisplay);
         if (alertCardBusy == false)
         {
             if(resultCard.getVisibility() == View.VISIBLE)
             {
                 resultCardVisibility(View.GONE);
             }
-            alertText.setText(textToDisplay);
             alertCardBusy = true;
             int DELAY = 500; // Delay time in milliseconds
             new Handler().postDelayed(new Runnable() {
@@ -290,17 +290,47 @@ public class pythagorasCalculator extends Fragment {
         {
             resultCardVisibility(View.GONE);
             invalidSubmission();
-            fireAlert("Lmao dude ya fucked up deadass my G");
+            String text = "Enter a, b and c!";
+            if (TextUtils.isEmpty(input1Text.getText().toString()) && TextUtils.isEmpty(input2Text.getText().toString()))
+            {
+                if(searchingForHypotenuse == true)
+                {
+                    text = "Enter a and b!";
+                }
+                else
+                {
+                    text = "Enter a and c!";
+                }
+            }
+            else if (TextUtils.isEmpty(input1Text.getText().toString()) && !TextUtils.isEmpty(input2Text.getText().toString()))
+            {
+                text = "Enter a!";
+            }
+            else
+            {
+                if(searchingForHypotenuse == true)
+                {
+                    text = "Enter b!";
+                }
+                else
+                {
+                    text = "Enter c!";
+                }
+            }
+            fireAlert(text);
         }
         else if(searchingForHypotenuse == false && input1 == input2)
         {
             resultCardVisibility(View.GONE);
             invalidSubmission();
-            fireAlert("searching for side when both inputs are equal");
+            fireAlert("The hypotenuse cannot be the same length as one of the sides!");
         }
         else
         {
+            alertCard.setVisibility(View.INVISIBLE);
+            alertText.setVisibility(View.GONE);
             resultCardVisibility(View.VISIBLE);
+
             double answerSquare;
 
             if(searchingForHypotenuse == true)
