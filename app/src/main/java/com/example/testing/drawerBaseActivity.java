@@ -45,7 +45,7 @@ public class drawerBaseActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 break;
             case R.id.nav_coordinates:
-                startActivity(new Intent(this, coordinate_tieses.class));
+                startActivity(new Intent(this, coordinatesMain.class));
                 finish();
                 overridePendingTransition(0, 0);
                 break;
