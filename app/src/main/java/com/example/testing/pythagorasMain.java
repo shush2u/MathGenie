@@ -11,14 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.testing.databinding.PythagorasMainBinding;
+import com.example.testing.databinding.MainPythagorasBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class pythagorasMain extends drawerBaseActivity {
 
-    PythagorasMainBinding binding;
+    MainPythagorasBinding binding;
 
     boolean validSubmission = false;
     int currentFragment; // 1 calc, 2 expl.
@@ -27,7 +27,7 @@ public class pythagorasMain extends drawerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        binding = PythagorasMainBinding.inflate(getLayoutInflater());
+        binding = MainPythagorasBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         allocateActivityTitle("Pythagoras Calculator");
 

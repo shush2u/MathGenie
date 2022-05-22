@@ -10,14 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.testing.databinding.QuadraticMainBinding;
+import com.example.testing.databinding.MainQuadraticBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class quadraticMain extends drawerBaseActivity {
 
-    QuadraticMainBinding binding;
+    MainQuadraticBinding binding;
 
     boolean validSubmission = false;
     int currentFragment; // 1 calc, 2 expl.
@@ -26,7 +26,7 @@ public class quadraticMain extends drawerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        binding = QuadraticMainBinding.inflate(getLayoutInflater());
+        binding = MainQuadraticBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         allocateActivityTitle("Quadratic Calculator");
 

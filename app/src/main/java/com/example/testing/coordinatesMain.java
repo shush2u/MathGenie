@@ -11,15 +11,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.example.testing.databinding.CoordinatesMainBinding;
-import com.example.testing.databinding.QuadraticMainBinding;
+import com.example.testing.databinding.MainCoordinatesBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class coordinatesMain extends drawerBaseActivity {
 
-    CoordinatesMainBinding binding;
+    MainCoordinatesBinding binding;
 
     boolean validSubmission = false;
     int currentFragment; // 1 calc, 2 expl.
@@ -29,7 +28,7 @@ public class coordinatesMain extends drawerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        binding = CoordinatesMainBinding.inflate(getLayoutInflater());
+        binding = MainCoordinatesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         allocateActivityTitle("Coordinates Calculator");
 
