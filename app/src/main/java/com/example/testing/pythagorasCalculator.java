@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,6 +143,27 @@ public class pythagorasCalculator extends Fragment {
                 }
             }
         });
+
+        disableBackButton(view, savedInstanceState);
+    }
+
+    private void disableBackButton(View view, @Nullable Bundle savedInstanceState) // does what the name says :P, credit to "Tejas Mehta" on StackOverflow
+    {
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        //Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void sendData(double sendInput1, double sendInput2, boolean sendHypotenuse, double sendAnswerSquare)
@@ -205,24 +227,12 @@ public class pythagorasCalculator extends Fragment {
     private void fireAlert(String textToDisplay)
     {
         alertText.setText(textToDisplay);
-        if (alertCardBusy == false)
+        if(alertCard.getVisibility() != View.VISIBLE)
         {
-            if(resultCard.getVisibility() == View.VISIBLE)
-            {
-                resultCardVisibility(View.GONE);
-            }
-            alertCardBusy = true;
-            int DELAY = 500; // Delay time in milliseconds
-            new Handler().postDelayed(new Runnable() {
-                public void run()
-                {
-                    alertCard.setVisibility(View.VISIBLE);
-                    int v = (alertText.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
-                    TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
-                    alertText.setVisibility(v);
-                    alertCardBusy = false;
-                }
-            }, DELAY);
+            alertCard.setVisibility(View.VISIBLE);
+            TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
+
+            alertText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -242,6 +252,12 @@ public class pythagorasCalculator extends Fragment {
             resultCard.setVisibility(View.INVISIBLE);
         else
             resultCard.setVisibility(View.VISIBLE);
+
+        if(alertCard.getVisibility() == View.VISIBLE && visibility == View.VISIBLE)
+        {
+            alertCard.setVisibility(View.INVISIBLE);
+            alertText.setVisibility(View.GONE);
+        }
 
         TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
 
@@ -274,7 +290,7 @@ public class pythagorasCalculator extends Fragment {
 
         double input1, input2;
 
-        if (!TextUtils.isEmpty(input1Text.getText().toString()) && !TextUtils.isEmpty(input2Text.getText().toString()))
+        if (validInput() == true)
         {
             anyValidInputReceived = true;
             input1 = Double.parseDouble(input1Text.getText().toString());
@@ -289,34 +305,30 @@ public class pythagorasCalculator extends Fragment {
         if(anyValidInputReceived != true)
         {
             resultCardVisibility(View.GONE);
-            invalidSubmission();
-            String text = "Enter a, b and c!";
-            if (TextUtils.isEmpty(input1Text.getText().toString()) && TextUtils.isEmpty(input2Text.getText().toString()))
+
+            boolean first, second;
+            first = checkIfEntered(input1Text);
+            second = checkIfEntered(input2Text);
+
+            String text = "Enter ";
+
+            if(first == false && second == false)
             {
                 if(searchingForHypotenuse == true)
                 {
-                    text = "Enter a and b!";
+                    text += "a and b!";
                 }
                 else
                 {
-                    text = "Enter a and c!";
+                    text += "a and c!";
                 }
-            }
-            else if (TextUtils.isEmpty(input1Text.getText().toString()) && !TextUtils.isEmpty(input2Text.getText().toString()))
-            {
-                text = "Enter a!";
             }
             else
             {
-                if(searchingForHypotenuse == true)
-                {
-                    text = "Enter b!";
-                }
-                else
-                {
-                    text = "Enter c!";
-                }
+                text += missingInputs(first, second, searchingForHypotenuse);
             }
+
+            invalidSubmission();
             fireAlert(text);
         }
         else if(searchingForHypotenuse == false && input1 == input2)
@@ -365,6 +377,64 @@ public class pythagorasCalculator extends Fragment {
 
             sendData(input1, input2, searchingForHypotenuse, answerSquare);
         }
+    }
+
+    private boolean validInput()
+    {
+        if (TextUtils.isEmpty(input1Text.getText().toString()) || TextUtils.isEmpty(input2Text.getText().toString()))
+        {
+            return false;
+        }
+        else if(input1Text.getText().toString().equals("-") || input2Text.getText().toString().equals("-"))
+        {
+            return false;
+        }
+        else if(input1Text.getText().toString().equals(".") || input2Text.getText().toString().equals("."))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    private boolean checkIfEntered(EditText editText)
+    {
+        if(TextUtils.isEmpty(editText.getText().toString()) || editText.getText().toString().equals("-") || editText.getText().toString().equals("."))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    private String missingInputs(boolean first, boolean second, boolean hypotenuse)
+    {
+        String output = "";
+
+        if(first == false)
+        {
+            output += "a, ";
+        }
+        if(second == false)
+        {
+            if(hypotenuse == true)
+            {
+                output += "b, ";
+            }
+            else
+            {
+                output += "c, ";
+            }
+        }
+
+        output = output.substring(0, output.length() - 2);
+        output += "!";
+
+        return output;
     }
 }
 

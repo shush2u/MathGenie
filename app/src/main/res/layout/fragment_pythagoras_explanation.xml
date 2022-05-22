@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".pythagorasExplanation"
     android:clipToPadding="false"
-    android:clipChildren="false">
+    android:clipChildren="false"
+    android:id="@+id/rootLayout">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
         android:layout_gravity="center">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/pythagorasExplanationLayout"
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"

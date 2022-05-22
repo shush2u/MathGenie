@@ -2,6 +2,7 @@ package com.example.testing;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +101,28 @@ public class pythagorasExplanation extends Fragment {
         assignIDs();
         assignTextAndValues();
 
+        //((pythagorasMain)getActivity()).showSnackbar("Scroll to see the rest!");
+
+        disableBackButton(view, savedInstanceState);
+    }
+
+    private void disableBackButton(View view, @Nullable Bundle savedInstanceState) // does what the name says :P, credit to "Tejas Mehta" on StackOverflow
+    {
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        //Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     TextView pythagorasExplanationSideOrHypotenuseText, pythagorasExplanationSideOrHypotenuseFormula;

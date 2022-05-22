@@ -10,8 +10,9 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.MathGenie">
+
         <activity
-            android:name=".coordinatesMain"
+            android:name=".splash"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +23,13 @@
 
         <activity
             android:name=".quadraticMain"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".coordinatesMain"
+            android:screenOrientation="portrait">
+        </activity>
 
         <activity
             android:name=".pythagorasMain"
@@ -30,13 +37,9 @@
         </activity>
 
         <activity
-            android:name=".splash"
+            android:name=".aboutPage"
             android:screenOrientation="portrait">
         </activity>
-
-        <activity
-            android:name=".aboutPage"
-            android:screenOrientation="portrait" />
 
     </application>
 

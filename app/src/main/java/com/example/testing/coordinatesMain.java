@@ -6,11 +6,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.testing.databinding.CoordinatesMainBinding;
 import com.example.testing.databinding.QuadraticMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 public class coordinatesMain extends drawerBaseActivity {
 
@@ -112,6 +117,7 @@ public class coordinatesMain extends drawerBaseActivity {
         middlePointX = midX;
         middlePointY = midY;
         validateSubmission(true);
+        uniqueExplanation = true;
     }
 
     BottomNavigationView navView;
@@ -127,6 +133,29 @@ public class coordinatesMain extends drawerBaseActivity {
         {
             validSubmission = false;
             navView.getMenu().getItem(1).setEnabled(false);
+        }
+    }
+
+    boolean uniqueExplanation = true;
+
+    public void showSnackbar(String textToDisplay)
+    {
+        if(uniqueExplanation == true)
+        {
+            // Create snackbar and position it over bottomNav, change animation to fadein
+            Snackbar scrollAlert = Snackbar.make(findViewById(R.id.rootLayout), textToDisplay, Snackbar.LENGTH_LONG);
+            scrollAlert.setAnchorView(navView);
+            scrollAlert.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE);
+
+            // Center Text in snackbar
+            View scrollAlertView = scrollAlert.getView();
+            TextView scrollAlertText = (TextView) scrollAlertView.findViewById(com.google.android.material.R.id.snackbar_text);
+            scrollAlertText.setGravity(Gravity.CENTER_HORIZONTAL);
+            scrollAlertText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            // Show snackbar
+            scrollAlert.show();
+            uniqueExplanation = false;
         }
     }
 }

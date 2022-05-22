@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
@@ -109,6 +111,27 @@ public class coordinatesCalculator extends Fragment {
                 showResult();
             }
         });
+
+        disableBackButton(view, savedInstanceState);
+    }
+
+    private void disableBackButton(View view, @Nullable Bundle savedInstanceState) // does what the name says :P, credit to "Tejas Mehta" on StackOverflow
+    {
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        //Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void sendData(double x1, double x2, double y1, double y2, double d2, double midX, double midY)
@@ -134,7 +157,7 @@ public class coordinatesCalculator extends Fragment {
         alertText = (TextView) getView().findViewById(R.id.alertText);
 
         alertLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
-        alertCard.setVisibility(View.GONE);
+        alertCard.setVisibility(View.INVISIBLE);
         alertText.setVisibility(View.GONE);
 
         resultLayout = (LinearLayout) getView().findViewById(R.id.resultLayout);
@@ -169,24 +192,12 @@ public class coordinatesCalculator extends Fragment {
     private void fireAlert(String textToDisplay)
     {
         alertText.setText(textToDisplay);
-        if (alertCardBusy == false)
+        if(alertCard.getVisibility() != View.VISIBLE)
         {
-            if(resultCard.getVisibility() == View.VISIBLE)
-            {
-                resultCardVisibility(View.GONE);
-            }
-            alertCardBusy = true;
-            int DELAY = 500; // Delay time in milliseconds
-            new Handler().postDelayed(new Runnable() {
-                public void run()
-                {
-                    alertCard.setVisibility(View.VISIBLE);
-                    int v = (alertText.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
-                    TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
-                    alertText.setVisibility(v);
-                    alertCardBusy = false;
-                }
-            }, DELAY);
+            alertCard.setVisibility(View.VISIBLE);
+            TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
+
+            alertText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -200,11 +211,18 @@ public class coordinatesCalculator extends Fragment {
         imm.hideSoftInputFromWindow(submitButton.getWindowToken(), 0);
     }
 
-    private void resultCardVisibility(int visibility) {
+    private void resultCardVisibility(int visibility)
+    {
         if (visibility == View.GONE)
             resultCard.setVisibility(View.INVISIBLE);
         else
             resultCard.setVisibility(View.VISIBLE);
+
+        if(alertCard.getVisibility() == View.VISIBLE && visibility == View.VISIBLE)
+        {
+            alertCard.setVisibility(View.INVISIBLE);
+            alertText.setVisibility(View.GONE);
+        }
 
         TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
 
@@ -217,17 +235,16 @@ public class coordinatesCalculator extends Fragment {
     private void showResult()
     {
         hideKeyboard();
-        if (!TextUtils.isEmpty(inputX1Text.getText().toString()) && !TextUtils.isEmpty(inputX2Text.getText().toString()) && !TextUtils.isEmpty(inputY1Text.getText().toString()) && !TextUtils.isEmpty(inputY2Text.getText().toString()))
+        if(validInput() == true)
         {
             double inputX1 = Double.parseDouble(inputX1Text.getText().toString());
             double inputX2 = Double.parseDouble(inputX2Text.getText().toString());
             double inputY1 = Double.parseDouble(inputY1Text.getText().toString());
             double inputY2 = Double.parseDouble(inputY2Text.getText().toString());
-
             if(inputX1 == inputX2 && inputY1 == inputY2)
             {
-                resultCardVisibility(View.VISIBLE);
-                fireAlert("Įvedėte du tokius pačius taškus!");
+                resultCardVisibility(View.GONE);
+                fireAlert("The two points are the same!");
             }
             else
             {
@@ -248,10 +265,85 @@ public class coordinatesCalculator extends Fragment {
         else
         {
             resultCardVisibility(View.GONE);
-            fireAlert("Enter values!");
+
+            boolean x1, x2, y1, y2;
+            x1 = checkIfEntered(inputX1Text);
+            x2 = checkIfEntered(inputX2Text);
+            y1 = checkIfEntered(inputY1Text);
+            y2 = checkIfEntered(inputY2Text);
+
+            String text = "Enter ";
+            if(x1 == false && x2 == false && y1 == false && y2 == false)
+            {
+                text += "all of the point coordinates!";
+            }
+            else
+            {
+                text += missingInputs(x1, x2, y1, y2);
+            }
+            fireAlert(text);
             invalidSubmission();
         }
 
+    }
+
+    private boolean validInput()
+    {
+        if (TextUtils.isEmpty(inputX1Text.getText().toString()) || TextUtils.isEmpty(inputX2Text.getText().toString()) || TextUtils.isEmpty(inputY1Text.getText().toString()) || TextUtils.isEmpty(inputY2Text.getText().toString()))
+        {
+            return false;
+        }
+        else if(inputX1Text.getText().toString().equals("-") || inputX2Text.getText().toString().equals("-") || inputY1Text.getText().toString().equals("-") || inputY2Text.getText().toString().equals("-"))
+        {
+            return false;
+        }
+        else if(inputX1Text.getText().toString().equals(".") || inputX2Text.getText().toString().equals(".") || inputY1Text.getText().toString().equals(".") || inputY2Text.getText().toString().equals("."))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    private boolean checkIfEntered(EditText editText)
+    {
+        if(TextUtils.isEmpty(editText.getText().toString()) || editText.getText().toString().equals("-") || editText.getText().toString().equals("."))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    private String missingInputs(boolean x1, boolean x2, boolean y1, boolean y2)
+    {
+        String output = "";
+
+        if(x1 == false)
+        {
+            output += "x₁, ";
+        }
+        if(x2 == false)
+        {
+            output += "x₂, ";
+        }
+        if(y1 == false)
+        {
+            output += "y₁, ";
+        }
+        if(y2 == false)
+        {
+            output += "y₂, ";
+        }
+
+        output = output.substring(0, output.length() - 2);
+        output += "!";
+
+        return output;
     }
 }
 

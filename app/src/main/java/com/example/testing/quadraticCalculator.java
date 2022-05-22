@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,6 +112,27 @@ public class quadraticCalculator extends Fragment {
                 showResult();
             }
         });
+
+        disableBackButton(view, savedInstanceState);
+    }
+
+    private void disableBackButton(View view, @Nullable Bundle savedInstanceState) // does what the name says :P, credit to "Tejas Mehta" on StackOverflow
+    {
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        //Toast.makeText(getActivity(), "Back Pressed", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void sendData(double sendInputA, double sendInputB, double sendInputC)
@@ -168,25 +191,13 @@ public class quadraticCalculator extends Fragment {
 
     private void fireAlert(String textToDisplay)
     {
-        if (alertCardBusy == false)
+        alertText.setText(textToDisplay);
+        if(alertCard.getVisibility() != View.VISIBLE)
         {
-            if(resultCard.getVisibility() == View.VISIBLE)
-            {
-                resultCardVisibility(View.GONE);
-            }
-            alertText.setText(textToDisplay);
-            alertCardBusy = true;
-            int DELAY = 500; // Delay time in milliseconds
-            new Handler().postDelayed(new Runnable() {
-                public void run()
-                {
-                    alertCard.setVisibility(View.VISIBLE);
-                    int v = (alertText.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
-                    TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
-                    alertText.setVisibility(v);
-                    alertCardBusy = false;
-                }
-            }, DELAY);
+            alertCard.setVisibility(View.VISIBLE);
+            TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
+
+            alertText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -208,6 +219,12 @@ public class quadraticCalculator extends Fragment {
         else
             resultCard.setVisibility(View.VISIBLE);
 
+        if(alertCard.getVisibility() == View.VISIBLE && visibility == View.VISIBLE)
+        {
+            alertCard.setVisibility(View.INVISIBLE);
+            alertText.setVisibility(View.GONE);
+        }
+
         TransitionManager.beginDelayedTransition(resultLayout, new AutoTransition());
 
         discriminatorValue.setVisibility(visibility);
@@ -220,7 +237,7 @@ public class quadraticCalculator extends Fragment {
         resetAnswerText();
         hideKeyboard();
         boolean anyValidInputReceived;
-        if (!TextUtils.isEmpty(inputAText.getText().toString()) && !TextUtils.isEmpty(inputBText.getText().toString()) && !TextUtils.isEmpty(inputCText.getText().toString()))
+        if (validInput() == true)
         {
             anyValidInputReceived = true;
             inputA = Double.parseDouble(inputAText.getText().toString());
@@ -233,25 +250,30 @@ public class quadraticCalculator extends Fragment {
         }
         if (anyValidInputReceived == false)
         {
-            String text = "Enter a, b and c!";
-            if (TextUtils.isEmpty(inputAText.getText().toString()) && TextUtils.isEmpty(inputBText.getText().toString()) && TextUtils.isEmpty(inputCText.getText().toString()))
-                text = "Enter a, b and c!";
-            else if (TextUtils.isEmpty(inputAText.getText().toString()) && TextUtils.isEmpty(inputBText.getText().toString()))
-                text = "Enter a and b!";
-            else if (TextUtils.isEmpty(inputBText.getText().toString()) && TextUtils.isEmpty(inputCText.getText().toString()))
-                text = "Enter b and c!";
-            else if (TextUtils.isEmpty(inputAText.getText().toString()) && TextUtils.isEmpty(inputCText.getText().toString()))
-                text = "Enter a and C!";
-            else if (TextUtils.isEmpty(inputAText.getText().toString()))
-                text = "Enter a!";
-            else if (TextUtils.isEmpty(inputBText.getText().toString()))
-                text = "Enter b!";
-            else if (TextUtils.isEmpty(inputCText.getText().toString()))
-                text = "Enter c!";
+            resultCardVisibility(View.GONE);
+
+            boolean a, b, c;
+            a = checkIfEntered(inputAText);
+            b = checkIfEntered(inputBText);
+            c = checkIfEntered(inputCText);
+
+            String text = "Enter ";
+
+            if(a == false && b == false && c == false)
+            {
+                text += "a, b and c!";
+            }
+            else
+            {
+                text += missingInputs(a, b, c);
+            }
+
             fireAlert(text);
         }
         else if (inputA == 0 || inputB == 0 || inputC == 0)
         {
+            resultCardVisibility(View.GONE);
+
             String text = "Inputs cannot be 0!";
             if (inputA == 0 && inputB == 0 && inputC == 0)
                 text = "Inputs a, b and c are 0!";
@@ -305,7 +327,61 @@ public class quadraticCalculator extends Fragment {
         {
             invalidSubmission();
         }
+    }
 
+    private boolean validInput()
+    {
+        if (TextUtils.isEmpty(inputAText.getText().toString()) || TextUtils.isEmpty(inputBText.getText().toString()) || TextUtils.isEmpty(inputCText.getText().toString()))
+        {
+            return false;
+        }
+        else if(inputAText.getText().toString().equals("-") || inputBText.getText().toString().equals("-") || inputCText.getText().toString().equals("-"))
+        {
+            return false;
+        }
+        else if(inputAText.getText().toString().equals(".") || inputBText.getText().toString().equals(".") || inputCText.getText().toString().equals("."))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    private boolean checkIfEntered(EditText editText)
+    {
+        if(TextUtils.isEmpty(editText.getText().toString()) || editText.getText().toString().equals("-") || editText.getText().toString().equals("."))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    private String missingInputs(boolean a, boolean b, boolean c)
+    {
+        String output = "";
+
+        if(a == false)
+        {
+            output += "a, ";
+        }
+        if(b == false)
+        {
+            output += "b, ";
+        }
+        if(c == false)
+        {
+            output += "c, ";
+        }
+
+        output = output.substring(0, output.length() - 2);
+        output += "!";
+
+        return output;
     }
 }
 
