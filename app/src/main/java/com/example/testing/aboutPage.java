@@ -5,7 +5,7 @@ import android.view.WindowManager;
 
 import com.example.testing.databinding.AboutPageBinding;
 
-public class aboutPage extends drawerBaseActivity {
+public class aboutPage extends sideDrawer {
 
     AboutPageBinding binding;
 

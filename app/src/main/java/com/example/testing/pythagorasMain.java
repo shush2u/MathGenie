@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-public class pythagorasMain extends drawerBaseActivity {
+public class pythagorasMain extends sideDrawer {
 
     MainPythagorasBinding binding;
 

@@ -63,11 +63,15 @@
                             android:textColor="@color/black"
                             android:textSize="20sp" />
 
-                        <ImageView
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:padding="6dp"
-                            android:src="@drawable/discriminator_formula" />
+                            android:text="D = b² - 4ac"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="30sp"
+                            android:textStyle="italic" />
 
                     </LinearLayout>
 

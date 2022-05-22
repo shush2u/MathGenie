@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-public class quadraticMain extends drawerBaseActivity {
+public class quadraticMain extends sideDrawer {
 
     MainQuadraticBinding binding;
 

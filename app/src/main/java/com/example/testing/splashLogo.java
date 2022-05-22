@@ -9,7 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-public class splash extends Activity {
+public class splashLogo extends Activity {
 
     private static int SPLASH_SCREEN = 4000;
 
@@ -20,7 +20,7 @@ public class splash extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);  // this line removes the STATUS BAR AT THE TOP (not the action bar)
-        setContentView(R.layout.splash);
+        setContentView(R.layout.splash_logo);
 
         topAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
 
@@ -30,7 +30,7 @@ public class splash extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(splash.this, quadraticMain.class);
+                Intent intent = new Intent(splashLogo.this, quadraticMain.class);
                 startActivity(intent);
                 finish();
             }
