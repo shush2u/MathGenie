@@ -173,10 +173,10 @@ public class quadraticExplanation extends Fragment {
 
 
             explanationDiscriminatorCalculation.setText("D = " + clnFmt(rnd8(inputB)) + "²" + " - 4 * " + clnFmt(rnd8(inputA)) + " * " + clnFmt(rnd8(inputC)) +" = " + clnFmt(rnd8((inputB*inputB))) + " - " + clnFmt(rnd8((4*inputA*inputC))) + " = " + fmt(rnd8(discriminator)));
-            explanationX1CalculationNumerator.setText("-" + clnFmt(rnd8(inputB)) + " + " + "√" + fmt(rnd8(discriminator)));
+            explanationX1CalculationNumerator.setText("-" + clnFmt(rnd8(inputB)) + " - " + "√" + fmt(rnd8(discriminator)));
             explanationX1CalculationDenominator.setText("2 * " + clnFmt(rnd8(inputA)));
             explanationX1CalculationAnswer.setText("" + fmt(rnd8(x1)));
-            explanationX2CalculationNumerator.setText("-" + clnFmt(rnd8(inputB)) + " - " + "√" + fmt(rnd8(discriminator)));
+            explanationX2CalculationNumerator.setText("-" + clnFmt(rnd8(inputB)) + " + " + "√" + fmt(rnd8(discriminator)));
             explanationX2CalculationDenominator.setText("2 * " + clnFmt(rnd8(inputA)));
             explanationX2CalculationAnswer.setText(""+ fmt(rnd8(x2)));
         }
