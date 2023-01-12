@@ -263,32 +263,20 @@ public class quadraticCalculator extends Fragment {
             {
                 text += "a, b and c!";
             }
+            else if(a == true && b == true && c == true)
+            {
+                assignMissingInputs(a, b, c);
+            }
+
+            if (inputA == 0 || inputB == 0 || inputC == 0)
+            {
+                text = "a, b or c cannot be 0!";
+            }
             else
             {
                 text += missingInputs(a, b, c);
             }
 
-            fireAlert(text);
-        }
-        else if (inputA == 0 || inputB == 0 || inputC == 0)
-        {
-            resultCardVisibility(View.GONE);
-
-            String text = "Inputs cannot be 0!";
-            if (inputA == 0 && inputB == 0 && inputC == 0)
-                text = "Inputs a, b and c are 0!";
-            else if (inputA == 0 && inputB == 0)
-                text = "Inputs a and b are 0";
-            else if (inputB == 0 && inputC == 0)
-                text = "Inputs b and c are 0";
-            else if (inputA == 0 && inputC == 0)
-                text = "Inputs a and c are 0";
-            else if (inputA == 0)
-                text = "Input a is 0!";
-            else if (inputB == 0)
-                text = "Input b is 0!";
-            else if (inputC == 0)
-                text = "Input c is 0!";
             fireAlert(text);
         }
         else if ((inputB * inputB) - (4 * inputA * inputC) > -1 && anyValidInputReceived == true)
@@ -343,6 +331,10 @@ public class quadraticCalculator extends Fragment {
         {
             return false;
         }
+        else if(inputAText.getText().toString().equals("0") || inputBText.getText().toString().equals("0") || inputCText.getText().toString().equals("0"))
+        {
+            return false;
+        }
         else
         {
             return true;
@@ -383,6 +375,18 @@ public class quadraticCalculator extends Fragment {
 
         return output;
     }
+    private void assignMissingInputs(boolean a, boolean b, boolean c)
+    {
+
+        inputA = Double.parseDouble(inputAText.getText().toString());
+
+        inputB = Double.parseDouble(inputBText.getText().toString());
+
+        inputC = Double.parseDouble(inputCText.getText().toString());
+
+    }
+
+
 }
 
 
