@@ -28,15 +28,14 @@
             android:layout_height="wrap_content"
             android:text="MathGenie"
             android:textAlignment="center"
-            android:textSize="48sp"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            />
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Version 0.9"
+            android:text="Version 0.91"
             android:textAlignment="center"
             android:textColor="@color/mediumGrey"
             android:textSize="30sp"
