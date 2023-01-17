@@ -31,19 +31,22 @@
         <activity
             android:name=".coordinatesMain"
             android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
         <activity
             android:name=".pythagorasMain"
             android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
         <activity
             android:name=".aboutPage"
             android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
     </application>
