@@ -23,22 +23,27 @@
 
         <activity
             android:name=".quadraticMain"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
         <activity
             android:name=".coordinatesMain"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".pythagorasMain"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".aboutPage"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
         </activity>
 
     </application>
